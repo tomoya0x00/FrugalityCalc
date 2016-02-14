@@ -22,7 +22,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/mc_button"
+            android:id="@+id/mclear_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
             style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
-            android:id="@+id/mr_button"
+            android:id="@+id/mread_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -67,11 +67,11 @@
             style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
-            android:id="@+id/clear_button"
+            android:id="@+id/clearend_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="C"
+            android:text="CE"
             android:textSize="20sp"
             style="?android:attr/buttonBarButtonStyle" />
 
