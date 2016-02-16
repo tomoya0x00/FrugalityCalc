@@ -35,7 +35,7 @@ public class Display {
         setString(str);
     }
 
-    // 末尾一文字追加
+    // 末尾にCalcNuber追加
     public void addNumber(CalcNumber num) {
         String nowStr = getString();
 
@@ -53,4 +53,13 @@ public class Display {
         setString(nowStr + num.getString());
     }
 
+    // CalcNumberセット
+    public void setNumber(CalcNumber num) {
+        if (num == CalcNumber.DOT) {
+            setString("0.");
+            return;
+        }
+
+        setString(num.getString());
+    }
 }
