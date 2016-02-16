@@ -31,12 +31,20 @@ public class StateContext {
         A = a;
     }
 
+    public void clearA() {
+        setA(new BigDecimal(CalcNumber.ZERO.getString()));
+    }
+
     public BigDecimal getB() {
         return B;
     }
 
     public void setB(BigDecimal b) {
         B = b;
+    }
+
+    public void clearB() {
+        setB(new BigDecimal(CalcNumber.ZERO.getString()));
     }
 
     public Operation getOperation() {
@@ -47,12 +55,21 @@ public class StateContext {
         this.operation = operation;
     }
 
+    public void clearOperation() {
+        setOperation(null);
+    }
+
     public Display getDisplay() {
         return this.display;
     }
 
     public void setDisplay(Display display) {
         this.display = display;
+    }
+
+    public void doCalc() {
+        BigDecimal result = this.operation.apply(this.A, this.B);
+        this.display.setString(result.toString());
     }
 
     public void onInputNumber(CalcNumber input) {

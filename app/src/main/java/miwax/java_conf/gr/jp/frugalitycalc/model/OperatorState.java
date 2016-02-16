@@ -15,26 +15,32 @@ public class OperatorState implements State {
 
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
-
+        context.getDisplay().setNumber(input);
+        context.setState(InputBState.getInstance());
     }
 
     @Override
     public void onInputOperator(StateContext context, Operation operator) {
-
+        context.setOperation(operator);
     }
 
     @Override
     public void onInputEqual(StateContext context) {
-
+        context.setOperation(null);
+        context.setState(ResultState.getInstance());
     }
 
     @Override
     public void onInputClearEnd(StateContext context) {
-
+        context.clearOperation();
+        context.setState(InputAState.getInstance());
     }
 
     @Override
     public void onInputAllClear(StateContext context) {
-
+        context.clearA();
+        context.clearB();
+        context.getDisplay().clear();
+        context.setState(InputAState.getInstance());
     }
 }
