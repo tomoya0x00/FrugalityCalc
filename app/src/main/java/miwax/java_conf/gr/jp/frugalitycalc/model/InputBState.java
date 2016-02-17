@@ -5,19 +5,8 @@ import java.math.BigDecimal;
 /**
  * B入力中状態
  */
-public class InputBState implements State {
-    private static InputBState ourInstance = new InputBState();
-
-    public static InputBState getInstance() {
-        return ourInstance;
-    }
-
-    private InputBState() {
-    }
-
-    private Object readResolve() {
-        return ourInstance;
-    }
+public enum InputBState implements State {
+    INSTANCE;
 
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
@@ -33,7 +22,7 @@ public class InputBState implements State {
         BigDecimal result = new BigDecimal(context.getDisplay().getString());
         context.setA(result);
         context.clearB();
-        context.setState(OperatorState.getInstance());
+        context.setState(OperatorState.INSTANCE);
     }
 
     @Override
@@ -41,7 +30,7 @@ public class InputBState implements State {
         BigDecimal b = new BigDecimal(context.getDisplay().getString());
         context.setB(b);
         context.doCalc();
-        context.setState(ResultState.getInstance());
+        context.setState(ResultState.INSTANCE);
     }
 
     @Override
@@ -55,6 +44,6 @@ public class InputBState implements State {
         context.clearB();
         context.clearOperation();
         context.getDisplay().clear();
-        context.setState(InputAState.getInstance());
+        context.setState(InputAState.INSTANCE);
     }
 }

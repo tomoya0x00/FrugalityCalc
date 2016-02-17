@@ -3,24 +3,13 @@ package miwax.java_conf.gr.jp.frugalitycalc.model;
 /**
  * 演算子選択状態
  */
-public class OperatorState implements State {
-    private static OperatorState ourInstance = new OperatorState();
-
-    public static OperatorState getInstance() {
-        return ourInstance;
-    }
-
-    private OperatorState() {
-    }
-
-    private Object readResolve() {
-        return ourInstance;
-    }
+public enum OperatorState implements State {
+    INSTANCE;
 
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
         context.getDisplay().setNumber(input);
-        context.setState(InputBState.getInstance());
+        context.setState(InputBState.INSTANCE);
     }
 
     @Override
@@ -31,13 +20,13 @@ public class OperatorState implements State {
     @Override
     public void onInputEqual(StateContext context) {
         context.setOperation(null);
-        context.setState(ResultState.getInstance());
+        context.setState(ResultState.INSTANCE);
     }
 
     @Override
     public void onInputClearEnd(StateContext context) {
         context.clearOperation();
-        context.setState(InputAState.getInstance());
+        context.setState(InputAState.INSTANCE);
     }
 
     @Override
@@ -45,6 +34,6 @@ public class OperatorState implements State {
         context.clearA();
         context.clearB();
         context.getDisplay().clear();
-        context.setState(InputAState.getInstance());
+        context.setState(InputAState.INSTANCE);
     }
 }

@@ -5,19 +5,8 @@ import java.math.BigDecimal;
 /**
  * 計算結果表示状態
  */
-public class ResultState implements State {
-    private static ResultState ourInstance = new ResultState();
-
-    public static ResultState getInstance() {
-        return ourInstance;
-    }
-
-    private ResultState() {
-    }
-
-    private Object readResolve() {
-        return ourInstance;
-    }
+public enum ResultState implements State {
+    INSTANCE;
 
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
@@ -25,7 +14,7 @@ public class ResultState implements State {
         context.clearB();
         context.clearOperation();
         context.getDisplay().setNumber(input);
-        context.setState(InputAState.getInstance());
+        context.setState(InputAState.INSTANCE);
     }
 
     @Override
@@ -34,7 +23,7 @@ public class ResultState implements State {
         context.setA(a);
         context.clearB();
         context.setOperation(operator);
-        context.setState(OperatorState.getInstance());
+        context.setState(OperatorState.INSTANCE);
     }
 
     @Override
@@ -48,7 +37,7 @@ public class ResultState implements State {
         context.clearB();
         context.clearOperation();
         context.getDisplay().clear();
-        context.setState(InputAState.getInstance());
+        context.setState(InputAState.INSTANCE);
     }
 
     @Override
@@ -57,6 +46,6 @@ public class ResultState implements State {
         context.clearB();
         context.clearOperation();
         context.getDisplay().clear();
-        context.setState(InputAState.getInstance());
+        context.setState(InputAState.INSTANCE);
     }
 }

@@ -15,7 +15,7 @@ public class StateContext implements Parcelable {
     public StateContext() {
         clearA();
         clearB();
-        setState(InputAState.getInstance());
+        setState(InputAState.INSTANCE);
     }
 
     public State getState() {
