@@ -15,6 +15,10 @@ public class InputAState implements State {
     private InputAState() {
     }
 
+    private Object readResolve() {
+        return ourInstance;
+    }
+
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
         context.getDisplay().addNumber(input);

@@ -13,6 +13,10 @@ public class OperatorState implements State {
     private OperatorState() {
     }
 
+    private Object readResolve() {
+        return ourInstance;
+    }
+
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
         context.getDisplay().setNumber(input);

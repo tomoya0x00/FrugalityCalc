@@ -15,6 +15,9 @@ import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.result_text) TextView resultText;
 
+    private static final String CONTEXT = "context";
+    private static final String RESULT_TEXT= "result_text";
+
     private StateContext context = new StateContext();
 
     @Override
@@ -22,8 +25,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if (savedInstanceState != null) {
+            context = savedInstanceState.getParcelable(CONTEXT);
+            resultText.setText(savedInstanceState.getString(RESULT_TEXT));
+        }
+
         Display display = new Display(resultText);
         context.setDisplay(display);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(CONTEXT, context);
+        outState.putString(RESULT_TEXT, resultText.getText().toString());
     }
 
     @OnClick(R.id.zero_button)

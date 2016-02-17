@@ -1,8 +1,11 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 
-public class StateContext {
+public class StateContext implements Parcelable {
     private State state;
     private BigDecimal A;
     private BigDecimal B;
@@ -10,8 +13,8 @@ public class StateContext {
     private Display display;
 
     public StateContext() {
-        this.A = new BigDecimal("0");
-        this.B = new BigDecimal("0");
+        clearA();
+        clearB();
         setState(InputAState.getInstance());
     }
 
@@ -91,4 +94,38 @@ public class StateContext {
     public void onInputAllClear() {
         this.state.onInputAllClear(this);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(state);
+        dest.writeString(A.toString());
+        dest.writeString(B.toString());
+        dest.writeSerializable(operation);
+    }
+
+    public static final Parcelable.Creator<StateContext> CREATOR
+            = new Parcelable.Creator<StateContext>() {
+        @Override
+        public StateContext createFromParcel(Parcel parcel) {
+            return new StateContext(parcel);
+        }
+
+        @Override
+        public StateContext[] newArray(int i) {
+            return new StateContext[i];
+        }
+    };
+
+    private StateContext(Parcel parcel) {
+        this.state = (State)parcel.readSerializable();
+        this.A = new BigDecimal(parcel.readString());
+        this.B = new BigDecimal(parcel.readString());
+        this.operation =  (Operation)parcel.readSerializable();
+    }
 }
+

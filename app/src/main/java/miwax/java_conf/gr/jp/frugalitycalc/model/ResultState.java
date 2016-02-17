@@ -15,6 +15,10 @@ public class ResultState implements State {
     private ResultState() {
     }
 
+    private Object readResolve() {
+        return ourInstance;
+    }
+
     @Override
     public void onInputNumber(StateContext context, CalcNumber input) {
         context.clearA();
