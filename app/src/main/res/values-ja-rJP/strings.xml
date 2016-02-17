@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calcerror_title">エラー</string>
+    <string name="calcerror_message">計算エラーが発生しました。\nオールクリアをおこないます。</string>
+</resources>

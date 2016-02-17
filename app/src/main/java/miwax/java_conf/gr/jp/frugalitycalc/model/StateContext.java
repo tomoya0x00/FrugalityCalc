@@ -1,5 +1,6 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,8 +12,13 @@ public class StateContext implements Parcelable {
     private BigDecimal B;
     private Operation operation;
     private Display display;
+    private Dialog dialog;
+    private Context appContext;
 
-    public StateContext() {
+    public StateContext(Context context, Display display, Dialog dialog) {
+        this.appContext = context;
+        this.display = display;
+        this.dialog = dialog;
         clearA();
         clearB();
         setState(InputAState.INSTANCE);
@@ -66,8 +72,12 @@ public class StateContext implements Parcelable {
         return this.display;
     }
 
-    public void setDisplay(Display display) {
-        this.display = display;
+    public Dialog getDialog() {
+        return dialog;
+    }
+
+    public Context getAppContext() {
+        return appContext;
     }
 
     public void doCalc() {

@@ -1,6 +1,10 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
+import android.content.res.Resources;
+
 import java.math.BigDecimal;
+
+import miwax.java_conf.gr.jp.frugalitycalc.R;
 
 /**
  * B入力中状態
@@ -17,7 +21,14 @@ public enum InputBState implements State {
     public void onInputOperator(StateContext context, Operation operator) {
         BigDecimal b = new BigDecimal(context.getDisplay().getString());
         context.setB(b);
-        context.doCalc();
+        try {
+            context.doCalc();
+        } catch (ArithmeticException e) {
+            Resources res = context.getAppContext().getResources();
+            context.getDialog().show(res.getString(R.string.calcerror_title), res.getString(R.string.calcerror_message));
+            onInputAllClear(context);
+            return;
+        }
 
         BigDecimal result = new BigDecimal(context.getDisplay().getString());
         context.setA(result);
@@ -29,7 +40,14 @@ public enum InputBState implements State {
     public void onInputEqual(StateContext context) {
         BigDecimal b = new BigDecimal(context.getDisplay().getString());
         context.setB(b);
-        context.doCalc();
+        try {
+            context.doCalc();
+        } catch (ArithmeticException e) {
+            Resources res = context.getAppContext().getResources();
+            context.getDialog().show(res.getString(R.string.calcerror_title), res.getString(R.string.calcerror_message));
+            onInputAllClear(context);
+            return;
+        }
         context.setState(ResultState.INSTANCE);
     }
 

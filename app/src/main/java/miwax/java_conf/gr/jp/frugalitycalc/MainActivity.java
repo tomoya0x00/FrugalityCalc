@@ -8,6 +8,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
+import miwax.java_conf.gr.jp.frugalitycalc.model.Dialog;
 import miwax.java_conf.gr.jp.frugalitycalc.model.Display;
 import miwax.java_conf.gr.jp.frugalitycalc.model.Operation;
 import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String CONTEXT = "context";
     private static final String RESULT_TEXT= "result_text";
 
-    private StateContext context = new StateContext();
+    private StateContext context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
             resultText.setText(savedInstanceState.getString(RESULT_TEXT));
         }
 
-        Display display = new Display(resultText);
-        context.setDisplay(display);
-    }
+        context = new StateContext(getApplicationContext(), new Display(resultText), new Dialog(this));
+   }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

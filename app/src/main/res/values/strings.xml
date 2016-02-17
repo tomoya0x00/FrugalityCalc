@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FrugalityCalc</string>
+    <string name="calcerror_title">Error</string>
+    <string name="calcerror_message">Calculation error occurred.\nAll Clear!"</string>
 </resources>
