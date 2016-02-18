@@ -67,6 +67,7 @@ public class StateContext implements Parcelable {
 
     public void setMemory(BigDecimal memory) {
         Memory = memory;
+        this.display.setMemory(Memory);
     }
 
     public void clearMemory() {

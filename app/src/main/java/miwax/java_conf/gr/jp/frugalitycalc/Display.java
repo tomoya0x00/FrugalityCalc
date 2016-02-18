@@ -2,28 +2,37 @@ package miwax.java_conf.gr.jp.frugalitycalc;
 
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
 
 public class Display {
-    private TextView text;
+    private TextView result;
+    private TextView memory;
 
-    public Display(TextView text) {
-        this.text = text;
+    public Display(TextView result, TextView memory) {
+        this.result = result;
+        this.memory = memory;
     }
 
     // 文字列セット
     public void setString(String str) {
-        text.setText(str);
+        result.setText(str);
     }
 
     // 文字列ゲット
     public String getString() {
-        return text.getText().toString();
+        return result.getText().toString();
     }
 
     // 全消去
     public void clear() {
         setString(CalcNumber.ZERO.getString());
+    }
+
+    // メモリー表示部にセット
+    public void setMemory(BigDecimal decimal) {
+        memory.setText("M:" + decimal.toString());
     }
 
     // 末尾一文字削除

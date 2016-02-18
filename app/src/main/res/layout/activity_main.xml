@@ -8,6 +8,17 @@
     tools:context="miwax.java_conf.gr.jp.frugalitycalc.MainActivity"
     style="?android:attr/buttonBarStyle">
 
+    <TextView
+        android:id="@+id/memory_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:padding="4dp"
+        android:background="#FAFAFA"
+        android:text="M:0"
+        android:textSize="16sp"
+        android:layout_gravity="left" />
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

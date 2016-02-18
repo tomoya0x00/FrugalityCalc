@@ -13,9 +13,11 @@ import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
 
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.result_text) TextView resultText;
+    @Bind(R.id.memory_text) TextView memoryText;
 
     private static final String CONTEXT = "context";
     private static final String RESULT_TEXT= "result_text";
+    private static final String MEMORY_TEXT= "memory_text";
 
     private StateContext context;
 
@@ -27,9 +29,10 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             context = savedInstanceState.getParcelable(CONTEXT);
             resultText.setText(savedInstanceState.getString(RESULT_TEXT));
+            memoryText.setText(savedInstanceState.getString(MEMORY_TEXT));
         }
 
-        context = new StateContext(getApplicationContext(), new Display(resultText), new Dialog(this));
+        context = new StateContext(getApplicationContext(), new Display(resultText, memoryText), new Dialog(this));
    }
 
     @Override
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelable(CONTEXT, context);
         outState.putString(RESULT_TEXT, resultText.getText().toString());
+        outState.putString(MEMORY_TEXT, memoryText.getText().toString());
     }
 
     @OnClick(R.id.zero_button)
