@@ -1,4 +1,4 @@
-package miwax.java_conf.gr.jp.frugalitycalc.model;
+package miwax.java_conf.gr.jp.frugalitycalc;
 
 import android.app.AlertDialog;
 import android.content.Context;

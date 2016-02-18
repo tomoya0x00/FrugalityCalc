@@ -8,8 +8,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
-import miwax.java_conf.gr.jp.frugalitycalc.model.Dialog;
-import miwax.java_conf.gr.jp.frugalitycalc.model.Display;
 import miwax.java_conf.gr.jp.frugalitycalc.model.Operation;
 import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
 

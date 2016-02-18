@@ -1,6 +1,8 @@
-package miwax.java_conf.gr.jp.frugalitycalc.model;
+package miwax.java_conf.gr.jp.frugalitycalc;
 
 import android.widget.TextView;
+
+import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
 
 public class Display {
     private TextView text;
