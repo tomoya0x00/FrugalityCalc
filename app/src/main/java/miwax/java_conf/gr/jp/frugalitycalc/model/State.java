@@ -8,4 +8,8 @@ public interface State extends Serializable {
     void onInputEqual(StateContext context);
     void onInputClearEnd(StateContext context);
     void onInputAllClear(StateContext context);
+    void onInputMemoryRead(StateContext context);
+    void onInputMemoryClear(StateContext context);
+    void onInputMemoryPlus(StateContext context);
+    void onInputMemoryMinus(StateContext context);
 }

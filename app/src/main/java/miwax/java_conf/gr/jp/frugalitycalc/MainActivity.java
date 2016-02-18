@@ -130,4 +130,24 @@ public class MainActivity extends AppCompatActivity {
     public void EqualButton() {
         context.onInputEqual();
     }
+
+    @OnClick(R.id.mclear_button)
+    public void MemoryClearButton() {
+        context.onInputMemoryClear();
+    }
+
+    @OnClick(R.id.mread_button)
+    public void MemoryReadButton() {
+        context.onInputMemoryRead();
+    }
+
+    @OnClick(R.id.mplus_button)
+    public void MemoryPlusButton() {
+        context.onInputMemoryPlus();
+    }
+
+    @OnClick(R.id.mminus_button)
+    public void MemoryMinusButton() {
+        context.onInputMemoryMinus();
+    }
 }

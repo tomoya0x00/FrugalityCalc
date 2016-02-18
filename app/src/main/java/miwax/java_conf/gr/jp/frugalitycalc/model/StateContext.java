@@ -10,6 +10,7 @@ public class StateContext implements Parcelable {
     private State state;
     private BigDecimal A;
     private BigDecimal B;
+    private BigDecimal Memory;
     private Operation operation;
     private Display display;
     private Dialog dialog;
@@ -21,6 +22,7 @@ public class StateContext implements Parcelable {
         this.dialog = dialog;
         clearA();
         clearB();
+        clearMemory();
         setState(InputAState.INSTANCE);
     }
 
@@ -54,6 +56,18 @@ public class StateContext implements Parcelable {
 
     public void clearB() {
         setB(new BigDecimal(CalcNumber.ZERO.getString()));
+    }
+
+    public BigDecimal getMemory() {
+        return Memory;
+    }
+
+    public void setMemory(BigDecimal memory) {
+        Memory = memory;
+    }
+
+    public void clearMemory() {
+        setMemory(new BigDecimal(CalcNumber.ZERO.getString()));
     }
 
     public Operation getOperation() {
@@ -105,6 +119,22 @@ public class StateContext implements Parcelable {
         this.state.onInputAllClear(this);
     }
 
+    public void onInputMemoryRead() {
+        this.state.onInputMemoryRead(this);
+    }
+
+    public void onInputMemoryClear() {
+        this.state.onInputMemoryClear(this);
+    }
+
+    public void onInputMemoryPlus() {
+        this.state.onInputMemoryPlus(this);
+    }
+
+    public void onInputMemoryMinus() {
+        this.state.onInputMemoryMinus(this);
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -115,6 +145,7 @@ public class StateContext implements Parcelable {
         dest.writeSerializable(state);
         dest.writeString(A.toString());
         dest.writeString(B.toString());
+        dest.writeString(Memory.toString());
         dest.writeSerializable(operation);
     }
 
@@ -135,6 +166,7 @@ public class StateContext implements Parcelable {
         this.state = (State)parcel.readSerializable();
         this.A = new BigDecimal(parcel.readString());
         this.B = new BigDecimal(parcel.readString());
+        this.Memory = new BigDecimal(parcel.readString());
         this.operation =  (Operation)parcel.readSerializable();
     }
 }

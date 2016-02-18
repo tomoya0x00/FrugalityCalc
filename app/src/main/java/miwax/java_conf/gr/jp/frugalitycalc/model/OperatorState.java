@@ -1,5 +1,7 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
+import java.math.BigDecimal;
+
 /**
  * 演算子選択状態
  */
@@ -35,5 +37,29 @@ public enum OperatorState implements State {
         context.clearB();
         context.getDisplay().clear();
         context.setState(InputAState.INSTANCE);
+    }
+
+    @Override
+    public void onInputMemoryRead(StateContext context) {
+        BigDecimal m = context.getMemory();
+        context.getDisplay().setString(m.toString());
+        context.setState(InputBState.INSTANCE);
+    }
+
+    @Override
+    public void onInputMemoryClear(StateContext context) {
+        context.clearMemory();
+    }
+
+    @Override
+    public void onInputMemoryPlus(StateContext context) {
+        BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+        context.setMemory(context.getMemory().add(decimal));
+    }
+
+    @Override
+    public void onInputMemoryMinus(StateContext context) {
+        BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+        context.setMemory(context.getMemory().subtract(decimal));
     }
 }

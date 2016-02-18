@@ -37,4 +37,27 @@ public enum InputAState implements State {
     public void onInputAllClear(StateContext context) {
         context.getDisplay().clear();
     }
+
+    @Override
+    public void onInputMemoryRead(StateContext context) {
+        BigDecimal m = context.getMemory();
+        context.getDisplay().setString(m.toString());
+    }
+
+    @Override
+    public void onInputMemoryClear(StateContext context) {
+        context.clearMemory();
+    }
+
+    @Override
+    public void onInputMemoryPlus(StateContext context) {
+        BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+        context.setMemory(context.getMemory().add(decimal));
+    }
+
+    @Override
+    public void onInputMemoryMinus(StateContext context) {
+        BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+        context.setMemory(context.getMemory().subtract(decimal));
+    }
 }
