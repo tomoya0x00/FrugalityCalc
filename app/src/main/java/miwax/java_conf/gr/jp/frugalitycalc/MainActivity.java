@@ -30,9 +30,12 @@ public class MainActivity extends AppCompatActivity {
             context = savedInstanceState.getParcelable(CONTEXT);
             resultText.setText(savedInstanceState.getString(RESULT_TEXT));
             memoryText.setText(savedInstanceState.getString(MEMORY_TEXT));
+        } else {
+            context = new StateContext(getApplicationContext());
         }
 
-        context = new StateContext(getApplicationContext(), new Display(resultText, memoryText), new Dialog(this));
+        context.setDisplay(new Display(resultText, memoryText));
+        context.setDialog(new Dialog(this));
    }
 
     @Override

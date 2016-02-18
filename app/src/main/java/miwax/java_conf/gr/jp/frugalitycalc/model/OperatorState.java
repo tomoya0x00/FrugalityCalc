@@ -53,6 +53,7 @@ public enum OperatorState implements State {
     @Override
     public void onInputMemoryClear(StateContext context) {
         context.clearMemory();
+        context.getDisplay().setMemory(context.getMemory());
     }
 
     @Override
@@ -64,7 +65,9 @@ public enum OperatorState implements State {
             Resources res = context.getAppContext().getResources();
             context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            return;
         }
+        context.getDisplay().setMemory(context.getMemory());
     }
 
     @Override
@@ -76,6 +79,8 @@ public enum OperatorState implements State {
             Resources res = context.getAppContext().getResources();
             context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            return;
         }
+        context.getDisplay().setMemory(context.getMemory());
     }
 }

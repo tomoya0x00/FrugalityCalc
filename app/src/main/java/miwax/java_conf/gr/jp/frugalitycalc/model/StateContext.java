@@ -19,10 +19,8 @@ public class StateContext implements Parcelable {
     private Dialog dialog;
     private Context appContext;
 
-    public StateContext(Context context, Display display, Dialog dialog) {
+    public StateContext(Context context) {
         this.appContext = context;
-        this.display = display;
-        this.dialog = dialog;
         clearA();
         clearB();
         clearMemory();
@@ -67,7 +65,6 @@ public class StateContext implements Parcelable {
 
     public void setMemory(BigDecimal memory) {
         Memory = memory;
-        this.display.setMemory(Memory);
     }
 
     public void clearMemory() {
@@ -86,8 +83,16 @@ public class StateContext implements Parcelable {
         setOperation(null);
     }
 
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
+
     public Display getDisplay() {
         return this.display;
+    }
+
+    public void setDialog(Dialog dialog) {
+        this.dialog = dialog;
     }
 
     public Dialog getDialog() {
