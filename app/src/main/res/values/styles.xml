@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CalcButtonMedium" parent="android:style/Widget.Material.Button.Borderless">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FAFAFA</item>
+    </style>
+
+    <style name="CalcButtonLarge" parent="android:style/Widget.Material.Button.Borderless">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#FAFAFA</item>
+    </style>
+
 </resources>

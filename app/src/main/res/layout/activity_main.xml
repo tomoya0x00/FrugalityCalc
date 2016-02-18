@@ -4,28 +4,32 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#424242"
     tools:context="miwax.java_conf.gr.jp.frugalitycalc.MainActivity"
     style="?android:attr/buttonBarStyle">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:background="#FAFAFA">
         <TextView
             android:id="@+id/result_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="4dp"
             android:singleLine="true"
             android:text="0"
             android:textSize="48sp"
             android:textAlignment="textEnd"
-            android:layout_gravity="end"/>
+            android:layout_gravity="end" />
     </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:background="#616161"
         android:orientation="horizontal">
 
         <Button
@@ -34,8 +38,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="MC"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/CalcButtonMedium" />
 
         <Button
             android:id="@+id/mread_button"
@@ -43,8 +46,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="MR"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/CalcButtonMedium" />
 
         <Button
             android:id="@+id/mplus_button"
@@ -52,8 +54,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="M+"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/CalcButtonMedium" />
 
         <Button
             android:id="@+id/mminus_button"
@@ -61,8 +62,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="M-"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/CalcButtonMedium" />
 
         <Button
             android:id="@+id/allclear_button"
@@ -70,8 +70,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="AC"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/CalcButtonMedium" />
 
         <Button
             android:id="@+id/clearend_button"
@@ -79,8 +78,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="CE"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonMedium" />
 
     </LinearLayout>
 
@@ -96,8 +94,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="7"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/eight_button"
@@ -105,8 +102,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="8"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/nine_button"
@@ -114,8 +110,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="9"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/div_button"
@@ -123,8 +118,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="÷"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -139,8 +133,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="4"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/five_button"
@@ -148,8 +141,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="5"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/six_button"
@@ -157,8 +149,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="6"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/multiple_button"
@@ -166,8 +157,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="×"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -182,8 +172,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="1"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/two_button"
@@ -191,8 +180,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="2"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/three_button"
@@ -200,8 +188,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="3"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/sub_button"
@@ -209,8 +196,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="－"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -225,8 +211,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="."
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/zero_button"
@@ -234,8 +219,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="0"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/equal_button"
@@ -243,8 +227,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="="
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
 
         <Button
             android:id="@+id/add_button"
@@ -252,8 +235,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="＋"
-            android:textSize="20sp"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/CalcButtonLarge" />
     </LinearLayout>
 
 </LinearLayout>
