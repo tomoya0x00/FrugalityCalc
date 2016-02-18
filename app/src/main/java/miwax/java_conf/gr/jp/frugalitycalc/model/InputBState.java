@@ -25,26 +25,41 @@ public enum InputBState implements State {
             context.doCalc();
         } catch (ArithmeticException e) {
             Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.calcerror_title), res.getString(R.string.calcerror_message));
+            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.calcerror_message));
             onInputAllClear(context);
             return;
         }
 
-        BigDecimal result = new BigDecimal(context.getDisplay().getString());
-        context.setA(result);
+        try {
+            BigDecimal result = new BigDecimal(context.getDisplay().getString());
+            context.setA(result);
+        } catch (NumberFormatException e) {
+            Resources res = context.getAppContext().getResources();
+            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
+            onInputAllClear(context);
+            return;
+        }
         context.clearB();
         context.setState(OperatorState.INSTANCE);
     }
 
     @Override
     public void onInputEqual(StateContext context) {
-        BigDecimal b = new BigDecimal(context.getDisplay().getString());
-        context.setB(b);
+        try {
+            BigDecimal b = new BigDecimal(context.getDisplay().getString());
+            context.setB(b);
+        } catch (NumberFormatException e) {
+            Resources res = context.getAppContext().getResources();
+            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
+            onInputAllClear(context);
+            return;
+        }
+
         try {
             context.doCalc();
         } catch (ArithmeticException e) {
             Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.calcerror_title), res.getString(R.string.calcerror_message));
+            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.calcerror_message));
             onInputAllClear(context);
             return;
         }
@@ -78,13 +93,25 @@ public enum InputBState implements State {
 
     @Override
     public void onInputMemoryPlus(StateContext context) {
-        BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
-        context.setMemory(context.getMemory().add(decimal));
+        try {
+            BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+            context.setMemory(context.getMemory().add(decimal));
+        } catch (NumberFormatException e) {
+            Resources res = context.getAppContext().getResources();
+            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
+            onInputAllClear(context);
+        }
     }
 
     @Override
     public void onInputMemoryMinus(StateContext context) {
-        BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
-        context.setMemory(context.getMemory().subtract(decimal));
+        try {
+            BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+            context.setMemory(context.getMemory().subtract(decimal));
+        } catch (NumberFormatException e) {
+            Resources res = context.getAppContext().getResources();
+            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
+            onInputAllClear(context);
+        }
     }
 }
