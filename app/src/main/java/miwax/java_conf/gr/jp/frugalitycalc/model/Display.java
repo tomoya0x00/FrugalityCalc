@@ -1,26 +1,26 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.widget.TextView;
+import android.databinding.ObservableField;
 
 import java.math.BigDecimal;
 
 public class Display {
-    private TextView result;
-    private TextView memory;
+    private ObservableField<String> result;
+    private ObservableField<String> memory;
 
-    public Display(TextView result, TextView memory) {
+    public Display(ObservableField<String> result, ObservableField<String> memory) {
         this.result = result;
         this.memory = memory;
     }
 
     // 文字列セット
     public void setString(String str) {
-        result.setText(str);
+        result.set(str);
     }
 
     // 文字列ゲット
     public String getString() {
-        return result.getText().toString();
+        return result.get();
     }
 
     // 全消去
@@ -30,7 +30,7 @@ public class Display {
 
     // メモリー表示部にセット
     public void setMemory(BigDecimal decimal) {
-        memory.setText("M:" + decimal.toString());
+        memory.set("M:" + decimal.toString());
     }
 
     // 末尾一文字削除
