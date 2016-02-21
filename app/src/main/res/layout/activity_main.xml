@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#424242"
-    tools:context="miwax.java_conf.gr.jp.frugalitycalc.MainActivity"
+    tools:context=".view.MainActivity"
     style="?android:attr/buttonBarStyle">
 
     <TextView

@@ -1,10 +1,8 @@
-package miwax.java_conf.gr.jp.frugalitycalc;
+package miwax.java_conf.gr.jp.frugalitycalc.model;
 
 import android.widget.TextView;
 
 import java.math.BigDecimal;
-
-import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
 
 public class Display {
     private TextView result;

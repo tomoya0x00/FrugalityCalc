@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import java.math.BigDecimal;
 
 import miwax.java_conf.gr.jp.frugalitycalc.Dialog;
-import miwax.java_conf.gr.jp.frugalitycalc.Display;
 
 public class StateContext implements Parcelable {
     private State state;
