@@ -1,14 +1,13 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.math.BigDecimal;
 
-import miwax.java_conf.gr.jp.frugalitycalc.Dialog;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 
 public class StateContext implements Parcelable {
 
@@ -17,12 +16,10 @@ public class StateContext implements Parcelable {
     private BigDecimal B;
     private Operation operation;
     private Editor editor = new Editor();
-    private Dialog dialog;
-    private Context appContext;
     private final BehaviorSubject<BigDecimal> memory = BehaviorSubject.create(new BigDecimal(CalcNumber.ZERO.getString()));
+    private final PublishSubject<CalcError> error = PublishSubject.create();
 
-    public StateContext(Context context) {
-        this.appContext = context;
+    public StateContext() {
         clearA();
         clearB();
         clearMemory();
@@ -85,18 +82,6 @@ public class StateContext implements Parcelable {
         return this.editor;
     }
 
-    public void setDialog(Dialog dialog) {
-        this.dialog = dialog;
-    }
-
-    public Dialog getDialog() {
-        return dialog;
-    }
-
-    public Context getAppContext() {
-        return appContext;
-    }
-
     public BigDecimal getMemory() {
         return memory.getValue();
     }
@@ -107,6 +92,14 @@ public class StateContext implements Parcelable {
 
     public void clearMemory() {
         setMemory(new BigDecimal(CalcNumber.ZERO.getString()));
+    }
+
+    public void notifyError(CalcError error) {
+        this.error.onNext(error);
+    }
+
+    public Observable<CalcError> getObservableError() {
+        return error;
     }
 
     public void doCalc() {

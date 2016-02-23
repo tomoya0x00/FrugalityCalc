@@ -1,10 +1,6 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.content.res.Resources;
-
 import java.math.BigDecimal;
-
-import miwax.java_conf.gr.jp.frugalitycalc.R;
 
 /**
  * 演算子選択状態
@@ -61,9 +57,8 @@ public enum OperatorState implements State {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().add(decimal));
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
         }
     }
 
@@ -73,9 +68,8 @@ public enum OperatorState implements State {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().subtract(decimal));
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
         }
     }
 }

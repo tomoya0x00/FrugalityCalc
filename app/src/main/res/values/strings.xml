@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FrugalityCalc</string>
     <string name="error_title">Error</string>
-    <string name="calcerror_message">Calculation error occurred.\nAll Clear!</string>
-    <string name="inputerror_message">Input number is invalid.\nAll Clear!</string>
+    <string name="calcerror_message">Calculation error occurred.\nAll Cleared!</string>
+    <string name="inputerror_message">Input number is invalid.\nAll Cleared!</string>
 </resources>

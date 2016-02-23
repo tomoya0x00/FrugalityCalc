@@ -1,10 +1,6 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.content.res.Resources;
-
 import java.math.BigDecimal;
-
-import miwax.java_conf.gr.jp.frugalitycalc.R;
 
 /**
  * B入力中状態
@@ -24,9 +20,8 @@ public enum InputBState implements State {
         try {
             context.doCalc();
         } catch (ArithmeticException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.calcerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.CALCULATION);
             return;
         }
 
@@ -34,9 +29,8 @@ public enum InputBState implements State {
             BigDecimal result = new BigDecimal(context.getEditor().getString());
             context.setA(result);
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
             return;
         }
         context.clearB();
@@ -49,18 +43,16 @@ public enum InputBState implements State {
             BigDecimal b = new BigDecimal(context.getEditor().getString());
             context.setB(b);
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
             return;
         }
 
         try {
             context.doCalc();
         } catch (ArithmeticException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.calcerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.CALCULATION);
             return;
         }
         context.setState(ResultState.INSTANCE);
@@ -97,9 +89,8 @@ public enum InputBState implements State {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().add(decimal));
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
         }
     }
 
@@ -109,9 +100,8 @@ public enum InputBState implements State {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().subtract(decimal));
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
         }
     }
 }

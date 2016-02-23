@@ -1,10 +1,6 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.content.res.Resources;
-
 import java.math.BigDecimal;
-
-import miwax.java_conf.gr.jp.frugalitycalc.R;
 
 /**
  * A入力状態
@@ -23,9 +19,8 @@ public enum InputAState implements State {
             BigDecimal a = new BigDecimal(context.getEditor().getString());
             context.setA(a);
         } catch (ArithmeticException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
             return;
         }
         context.setOperation(operator);
@@ -38,9 +33,8 @@ public enum InputAState implements State {
             BigDecimal a = new BigDecimal(context.getEditor().getString());
             context.setA(a);
         } catch (ArithmeticException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
             return;
         }
         context.setState(ResultState.INSTANCE);
@@ -73,9 +67,8 @@ public enum InputAState implements State {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().add(decimal));
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
         }
     }
 
@@ -85,9 +78,8 @@ public enum InputAState implements State {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().subtract(decimal));
         } catch (NumberFormatException e) {
-            Resources res = context.getAppContext().getResources();
-            context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
+            context.notifyError(CalcError.INPUT);
         }
     }
 }

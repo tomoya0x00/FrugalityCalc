@@ -6,32 +6,59 @@ import android.view.View;
 
 import java.math.BigDecimal;
 
-import miwax.java_conf.gr.jp.frugalitycalc.Dialog;
 import miwax.java_conf.gr.jp.frugalitycalc.R;
+import miwax.java_conf.gr.jp.frugalitycalc.model.CalcError;
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
 import miwax.java_conf.gr.jp.frugalitycalc.model.Operation;
 import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
+import miwax.java_conf.gr.jp.frugalitycalc.util.messenger.Messenger;
+import miwax.java_conf.gr.jp.frugalitycalc.util.messenger.ShowAlertDialogMessage;
 import rx.Subscription;
+import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * View model for the MainActivity
  */
-public class MainViewModel implements Subscription{
+public class MainViewModel implements Subscription {
     public ObservableField<String> result;
     public ObservableField<BigDecimal> memory;
 
-    private Context context;
     private StateContext stateContext;
+    private Messenger messenger = new Messenger();
 
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
-    public MainViewModel(Context context) {
-        this.context = context;
-        stateContext = new StateContext(this.context);
-        stateContext.setDialog(new Dialog(this.context));
+    public MainViewModel(final Context context) {
+        stateContext = new StateContext();
+
         result = ObservableUtil.toObservableField(stateContext.getObservableResult(), subscriptions);
         memory = ObservableUtil.toObservableField(stateContext.getObservableMemory(), subscriptions);
+
+        subscriptions.add(
+                stateContext.getObservableError().subscribe(new Action1<CalcError>() {
+                    @Override
+                    public void call(CalcError calcError) {
+                        // 該当するエラーがあればダイアログ表示
+                        switch (calcError) {
+                            case CALCULATION:
+                                messenger.send(new ShowAlertDialogMessage(
+                                        context.getString(R.string.error_title),
+                                        context.getString(R.string.calcerror_message)));
+                                break;
+                            case INPUT:
+                                messenger.send(new ShowAlertDialogMessage(
+                                        context.getString(R.string.error_title),
+                                        context.getString(R.string.inputerror_message)));
+                                break;
+                        }
+                    }
+                })
+        );
+    }
+
+    public Messenger getMessenger() {
+        return messenger;
     }
 
     public void onClickNumber(View view) {
