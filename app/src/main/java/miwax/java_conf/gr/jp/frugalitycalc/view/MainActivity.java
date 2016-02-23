@@ -40,4 +40,10 @@ public class MainActivity extends AppCompatActivity {
         outState.putString(MEMORY_TEXT, memoryText.getText().toString());
         */
     }
+
+    @Override
+    protected void onDestroy() {
+        mainViewModel.unsubscribe();
+        super.onDestroy();
+    }
 }

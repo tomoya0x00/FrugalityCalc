@@ -17,14 +17,14 @@ public enum ResultState implements State {
         context.clearA();
         context.clearB();
         context.clearOperation();
-        context.getDisplay().setNumber(input);
+        context.getEditor().setNumber(input);
         context.setState(InputAState.INSTANCE);
     }
 
     @Override
     public void onInputOperator(StateContext context, Operation operator) {
         try {
-            BigDecimal a = new BigDecimal(context.getDisplay().getString());
+            BigDecimal a = new BigDecimal(context.getEditor().getString());
             context.setA(a);
         } catch (NumberFormatException e) {
             Resources res = context.getAppContext().getResources();
@@ -47,7 +47,7 @@ public enum ResultState implements State {
         context.clearA();
         context.clearB();
         context.clearOperation();
-        context.getDisplay().clear();
+        context.getEditor().clear();
         context.setState(InputAState.INSTANCE);
     }
 
@@ -56,14 +56,14 @@ public enum ResultState implements State {
         context.clearA();
         context.clearB();
         context.clearOperation();
-        context.getDisplay().clear();
+        context.getEditor().clear();
         context.setState(InputAState.INSTANCE);
     }
 
     @Override
     public void onInputMemoryRead(StateContext context) {
         BigDecimal m = context.getMemory();
-        context.getDisplay().setString(m.toString());
+        context.getEditor().setString(m.toString());
         context.clearA();
         context.clearB();
         context.clearOperation();
@@ -73,34 +73,29 @@ public enum ResultState implements State {
     @Override
     public void onInputMemoryClear(StateContext context) {
         context.clearMemory();
-        context.getDisplay().setMemory(context.getMemory());
     }
 
     @Override
     public void onInputMemoryPlus(StateContext context) {
         try {
-            BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+            BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().add(decimal));
         } catch (NumberFormatException e) {
             Resources res = context.getAppContext().getResources();
             context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
-            return;
         }
-        context.getDisplay().setMemory(context.getMemory());
     }
 
     @Override
     public void onInputMemoryMinus(StateContext context) {
         try {
-            BigDecimal decimal = new BigDecimal(context.getDisplay().getString());
+            BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().subtract(decimal));
         } catch (NumberFormatException e) {
             Resources res = context.getAppContext().getResources();
             context.getDialog().show(res.getString(R.string.error_title), res.getString(R.string.inputerror_message));
             onInputAllClear(context);
-            return;
         }
-        context.getDisplay().setMemory(context.getMemory());
     }
 }

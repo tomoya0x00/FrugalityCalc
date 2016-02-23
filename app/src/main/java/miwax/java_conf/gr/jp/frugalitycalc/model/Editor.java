@@ -1,36 +1,32 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.databinding.ObservableField;
+import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
-import java.math.BigDecimal;
+public class Editor {
+    private final BehaviorSubject<String> result = BehaviorSubject.create(CalcNumber.ZERO.getString());
 
-public class Display {
-    private ObservableField<String> result;
-    private ObservableField<String> memory;
+    public Editor() {
+    }
 
-    public Display(ObservableField<String> result, ObservableField<String> memory) {
-        this.result = result;
-        this.memory = memory;
+    // Observable返却
+    public Observable<String> getObservable() {
+        return result;
     }
 
     // 文字列セット
     public void setString(String str) {
-        result.set(str);
+        result.onNext(str);
     }
 
     // 文字列ゲット
     public String getString() {
-        return result.get();
+        return result.getValue();
     }
 
     // 全消去
     public void clear() {
         setString(CalcNumber.ZERO.getString());
-    }
-
-    // メモリー表示部にセット
-    public void setMemory(BigDecimal decimal) {
-        memory.set("M:" + decimal.toString());
     }
 
     // 末尾一文字削除

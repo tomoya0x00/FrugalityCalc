@@ -4,31 +4,34 @@ import android.content.Context;
 import android.databinding.ObservableField;
 import android.view.View;
 
+import java.math.BigDecimal;
+
 import miwax.java_conf.gr.jp.frugalitycalc.Dialog;
 import miwax.java_conf.gr.jp.frugalitycalc.R;
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
-import miwax.java_conf.gr.jp.frugalitycalc.model.Display;
 import miwax.java_conf.gr.jp.frugalitycalc.model.Operation;
 import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * View model for the MainActivity
  */
-public class MainViewModel {
+public class MainViewModel implements Subscription{
     public ObservableField<String> result;
-    public ObservableField<String> memory;
+    public ObservableField<BigDecimal> memory;
 
     private Context context;
     private StateContext stateContext;
 
+    private final CompositeSubscription subscriptions = new CompositeSubscription();
+
     public MainViewModel(Context context) {
         this.context = context;
         stateContext = new StateContext(this.context);
-        result = new ObservableField<>("0");
-        memory = new ObservableField<>("M:0");
-
-        stateContext.setDisplay(new Display(result, memory));
         stateContext.setDialog(new Dialog(this.context));
+        result = ObservableUtil.toObservableField(stateContext.getObservableResult(), subscriptions);
+        memory = ObservableUtil.toObservableField(stateContext.getObservableMemory(), subscriptions);
     }
 
     public void onClickNumber(View view) {
@@ -122,5 +125,15 @@ public class MainViewModel {
 
     public void onClickMemoryMinus(View view) {
         stateContext.onInputMemoryMinus();
+    }
+
+    @Override
+    public void unsubscribe() {
+        subscriptions.unsubscribe();
+    }
+
+    @Override
+    public boolean isUnsubscribed() {
+        return subscriptions.isUnsubscribed();
     }
 }

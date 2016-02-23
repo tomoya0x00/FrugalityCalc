@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
             type="miwax.java_conf.gr.jp.frugalitycalc.viewmodel.MainViewModel" />
@@ -14,16 +15,31 @@
         android:background="#424242"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/memory_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:background="#FAFAFA"
             android:padding="4dp"
-            android:singleLine="true"
-            android:text="@{viewModel.memory}"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FAFAFA"
+                android:text="M:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/memory_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="#FAFAFA"
+                android:singleLine="true"
+                android:text="@{viewModel.memory.toString}"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
