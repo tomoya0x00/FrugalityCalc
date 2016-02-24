@@ -14,7 +14,7 @@ public class StateContext implements Parcelable {
     private State state = InputAState.INSTANCE;
     private BigDecimal A = new BigDecimal(CalcNumber.ZERO.getString());
     private BigDecimal B = new BigDecimal(CalcNumber.ZERO.getString());
-    private Operation operation;
+    private final BehaviorSubject<Operation> operation = BehaviorSubject.create(Operation.NONE);
     private Editor editor = new Editor();
     private final BehaviorSubject<BigDecimal> memory = BehaviorSubject.create(new BigDecimal(CalcNumber.ZERO.getString()));
     private final PublishSubject<CalcError> error = PublishSubject.create();
@@ -28,6 +28,10 @@ public class StateContext implements Parcelable {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public Observable<Operation> getObservableOperation() {
+        return operation;
     }
 
     public Observable<BigDecimal> getObservableMemory() {
@@ -63,15 +67,15 @@ public class StateContext implements Parcelable {
     }
 
     public Operation getOperation() {
-        return operation;
+        return operation.getValue();
     }
 
     public void setOperation(Operation operation) {
-        this.operation = operation;
+        this.operation.onNext(operation);
     }
 
     public void clearOperation() {
-        setOperation(null);
+        setOperation(Operation.NONE);
     }
 
     public Editor getEditor() {
@@ -99,7 +103,7 @@ public class StateContext implements Parcelable {
     }
 
     public void doCalc() {
-        BigDecimal result = this.operation.apply(this.A, this.B);
+        BigDecimal result = this.operation.getValue().apply(this.A, this.B);
         this.editor.setString(result.toString());
     }
 
@@ -149,7 +153,7 @@ public class StateContext implements Parcelable {
         dest.writeSerializable(state);
         dest.writeString(A.toString());
         dest.writeString(B.toString());
-        dest.writeSerializable(operation);
+        dest.writeSerializable(operation.getValue());
         dest.writeParcelable(editor, flags);
         dest.writeString(memory.getValue().toString());
     }
@@ -171,7 +175,7 @@ public class StateContext implements Parcelable {
         this.state = (State)parcel.readSerializable();
         this.A = new BigDecimal(parcel.readString());
         this.B = new BigDecimal(parcel.readString());
-        this.operation = (Operation)parcel.readSerializable();
+        this.operation.onNext((Operation)parcel.readSerializable());
         this.editor = parcel.readParcelable(Editor.class.getClassLoader());
         this.memory.onNext(new BigDecimal(parcel.readString()));
     }

@@ -55,6 +55,7 @@ public enum InputBState implements State {
             context.notifyError(CalcError.CALCULATION);
             return;
         }
+        context.clearOperation();
         context.setState(ResultState.INSTANCE);
     }
 
