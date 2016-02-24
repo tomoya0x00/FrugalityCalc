@@ -1,38 +1,35 @@
-package miwax.java_conf.gr.jp.frugalitycalc;
+package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.widget.TextView;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.math.BigDecimal;
+import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
-import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
+public class Editor implements Parcelable {
+    private final BehaviorSubject<String> result = BehaviorSubject.create(CalcNumber.ZERO.getString());
 
-public class Display {
-    private TextView result;
-    private TextView memory;
+    public Editor() {
+    }
 
-    public Display(TextView result, TextView memory) {
-        this.result = result;
-        this.memory = memory;
+    // Observable返却
+    public Observable<String> getObservable() {
+        return result;
     }
 
     // 文字列セット
     public void setString(String str) {
-        result.setText(str);
+        result.onNext(str);
     }
 
     // 文字列ゲット
     public String getString() {
-        return result.getText().toString();
+        return result.getValue();
     }
 
     // 全消去
     public void clear() {
         setString(CalcNumber.ZERO.getString());
-    }
-
-    // メモリー表示部にセット
-    public void setMemory(BigDecimal decimal) {
-        memory.setText("M:" + decimal.toString());
     }
 
     // 末尾一文字削除
@@ -73,4 +70,29 @@ public class Display {
 
         setString(num.getString());
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(result.getValue());
+    }
+
+    protected Editor(Parcel in) {
+        result.onNext(in.readString());
+    }
+
+    public static final Parcelable.Creator<Editor> CREATOR = new Parcelable.Creator<Editor>() {
+        public Editor createFromParcel(Parcel source) {
+            return new Editor(source);
+        }
+
+        public Editor[] newArray(int size) {
+            return new Editor[size];
+        }
+    };
 }

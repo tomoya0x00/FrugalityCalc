@@ -1,30 +1,25 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.math.BigDecimal;
 
-import miwax.java_conf.gr.jp.frugalitycalc.Dialog;
-import miwax.java_conf.gr.jp.frugalitycalc.Display;
+import rx.Observable;
+import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 
 public class StateContext implements Parcelable {
-    private State state;
-    private BigDecimal A;
-    private BigDecimal B;
-    private BigDecimal Memory;
-    private Operation operation;
-    private Display display;
-    private Dialog dialog;
-    private Context appContext;
 
-    public StateContext(Context context) {
-        this.appContext = context;
-        clearA();
-        clearB();
-        clearMemory();
-        setState(InputAState.INSTANCE);
+    private State state = InputAState.INSTANCE;
+    private BigDecimal A = new BigDecimal(CalcNumber.ZERO.getString());
+    private BigDecimal B = new BigDecimal(CalcNumber.ZERO.getString());
+    private Operation operation;
+    private Editor editor = new Editor();
+    private final BehaviorSubject<BigDecimal> memory = BehaviorSubject.create(new BigDecimal(CalcNumber.ZERO.getString()));
+    private final PublishSubject<CalcError> error = PublishSubject.create();
+
+    public StateContext() {
     }
 
     public State getState() {
@@ -33,6 +28,14 @@ public class StateContext implements Parcelable {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public Observable<BigDecimal> getObservableMemory() {
+        return memory;
+    }
+
+    public Observable<String> getObservableResult() {
+        return getEditor().getObservable();
     }
 
     public BigDecimal getA() {
@@ -59,18 +62,6 @@ public class StateContext implements Parcelable {
         setB(new BigDecimal(CalcNumber.ZERO.getString()));
     }
 
-    public BigDecimal getMemory() {
-        return Memory;
-    }
-
-    public void setMemory(BigDecimal memory) {
-        Memory = memory;
-    }
-
-    public void clearMemory() {
-        setMemory(new BigDecimal(CalcNumber.ZERO.getString()));
-    }
-
     public Operation getOperation() {
         return operation;
     }
@@ -83,29 +74,33 @@ public class StateContext implements Parcelable {
         setOperation(null);
     }
 
-    public void setDisplay(Display display) {
-        this.display = display;
+    public Editor getEditor() {
+        return this.editor;
     }
 
-    public Display getDisplay() {
-        return this.display;
+    public BigDecimal getMemory() {
+        return memory.getValue();
     }
 
-    public void setDialog(Dialog dialog) {
-        this.dialog = dialog;
+    public void setMemory(BigDecimal memory) {
+        this.memory.onNext(memory);
     }
 
-    public Dialog getDialog() {
-        return dialog;
+    public void clearMemory() {
+        setMemory(new BigDecimal(CalcNumber.ZERO.getString()));
     }
 
-    public Context getAppContext() {
-        return appContext;
+    public void notifyError(CalcError error) {
+        this.error.onNext(error);
+    }
+
+    public Observable<CalcError> getObservableError() {
+        return error;
     }
 
     public void doCalc() {
         BigDecimal result = this.operation.apply(this.A, this.B);
-        this.display.setString(result.toString());
+        this.editor.setString(result.toString());
     }
 
     public void onInputNumber(CalcNumber input) {
@@ -154,8 +149,9 @@ public class StateContext implements Parcelable {
         dest.writeSerializable(state);
         dest.writeString(A.toString());
         dest.writeString(B.toString());
-        dest.writeString(Memory.toString());
         dest.writeSerializable(operation);
+        dest.writeParcelable(editor, flags);
+        dest.writeString(memory.getValue().toString());
     }
 
     public static final Parcelable.Creator<StateContext> CREATOR
@@ -175,8 +171,9 @@ public class StateContext implements Parcelable {
         this.state = (State)parcel.readSerializable();
         this.A = new BigDecimal(parcel.readString());
         this.B = new BigDecimal(parcel.readString());
-        this.Memory = new BigDecimal(parcel.readString());
-        this.operation =  (Operation)parcel.readSerializable();
+        this.operation = (Operation)parcel.readSerializable();
+        this.editor = parcel.readParcelable(Editor.class.getClassLoader());
+        this.memory.onNext(new BigDecimal(parcel.readString()));
     }
 }
 
