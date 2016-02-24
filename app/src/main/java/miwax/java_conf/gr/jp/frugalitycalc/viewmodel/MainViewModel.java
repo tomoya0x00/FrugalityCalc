@@ -24,6 +24,7 @@ import rx.subscriptions.CompositeSubscription;
 public class MainViewModel implements Subscription, Parcelable {
     public ObservableField<String> result;
     public ObservableField<BigDecimal> memory;
+    public ObservableField<Operation> operation;
 
     private StateContext stateContext = new StateContext();
     private Messenger messenger = new Messenger();
@@ -37,6 +38,7 @@ public class MainViewModel implements Subscription, Parcelable {
     private void init() {
         result = ObservableUtil.toObservableField(stateContext.getObservableResult(), subscriptions);
         memory = ObservableUtil.toObservableField(stateContext.getObservableMemory(), subscriptions);
+        operation = ObservableUtil.toObservableField(stateContext.getObservableOperation(), subscriptions);
 
         subscriptions.add(
                 stateContext.getObservableError().subscribe(new Action1<CalcError>() {

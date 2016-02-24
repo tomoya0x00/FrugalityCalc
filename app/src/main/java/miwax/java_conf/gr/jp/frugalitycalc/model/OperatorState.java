@@ -21,7 +21,7 @@ public enum OperatorState implements State {
 
     @Override
     public void onInputEqual(StateContext context) {
-        context.setOperation(null);
+        context.clearOperation();
         context.setState(ResultState.INSTANCE);
     }
 
