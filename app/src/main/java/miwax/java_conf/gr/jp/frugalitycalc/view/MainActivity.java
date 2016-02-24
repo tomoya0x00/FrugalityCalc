@@ -14,6 +14,7 @@ import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends AppCompatActivity {
+    private final String VIEW_MODEL = "VIEW_MODEL";
 
     private ActivityMainBinding binding;
     private MainViewModel mainViewModel;
@@ -24,7 +25,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mainViewModel = new MainViewModel(this);
+
+        if (savedInstanceState != null) {
+            mainViewModel = savedInstanceState.getParcelable(VIEW_MODEL);
+        } else {
+            mainViewModel = new MainViewModel();
+        }
         binding.setViewModel(mainViewModel);
 
         // ダイアログ表示のメッセージ受信
@@ -34,32 +40,16 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Action1<ShowAlertDialogMessage>() {
                     @Override
                     public void call(ShowAlertDialogMessage message) {
-                        showAlertDialog(message.getTitle(), message.getText());
+                        showAlertDialog(message.getTitleId(), message.getTextId());
                     }
                 })
         );
-
-
-        /*
-        if (savedInstanceState != null) {
-            context = savedInstanceState.getParcelable(CONTEXT);
-            resultText.setText(savedInstanceState.getString(RESULT_TEXT));
-            memoryText.setText(savedInstanceState.getString(MEMORY_TEXT));
-        } else {
-            context = new StateContext(getApplicationContext());
-        }
-        */
    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //TODO: Support onSaveInstance
-        /*
-        outState.putParcelable(CONTEXT, context);
-        outState.putString(RESULT_TEXT, resultText.getText().toString());
-        outState.putString(MEMORY_TEXT, memoryText.getText().toString());
-        */
+        outState.putParcelable(VIEW_MODEL, mainViewModel);
     }
 
     @Override
@@ -68,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void showAlertDialog(String title, String text) {
+    private void showAlertDialog(int titleId, int textId) {
         new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(text)
+                .setTitle(this.getString(titleId))
+                .setMessage(this.getString(textId))
                 .setPositiveButton("OK", null)
                 .show();
     }

@@ -1,7 +1,8 @@
 package miwax.java_conf.gr.jp.frugalitycalc.viewmodel;
 
-import android.content.Context;
 import android.databinding.ObservableField;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 
 import java.math.BigDecimal;
@@ -20,18 +21,20 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * View model for the MainActivity
  */
-public class MainViewModel implements Subscription {
+public class MainViewModel implements Subscription, Parcelable {
     public ObservableField<String> result;
     public ObservableField<BigDecimal> memory;
 
-    private StateContext stateContext;
+    private StateContext stateContext = new StateContext();
     private Messenger messenger = new Messenger();
 
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
-    public MainViewModel(final Context context) {
-        stateContext = new StateContext();
+    public MainViewModel() {
+        init();
+    }
 
+    private void init() {
         result = ObservableUtil.toObservableField(stateContext.getObservableResult(), subscriptions);
         memory = ObservableUtil.toObservableField(stateContext.getObservableMemory(), subscriptions);
 
@@ -43,13 +46,13 @@ public class MainViewModel implements Subscription {
                         switch (calcError) {
                             case CALCULATION:
                                 messenger.send(new ShowAlertDialogMessage(
-                                        context.getString(R.string.error_title),
-                                        context.getString(R.string.calcerror_message)));
+                                        R.string.error_title,
+                                        R.string.calcerror_message));
                                 break;
                             case INPUT:
                                 messenger.send(new ShowAlertDialogMessage(
-                                        context.getString(R.string.error_title),
-                                        context.getString(R.string.inputerror_message)));
+                                        R.string.error_title,
+                                        R.string.inputerror_message));
                                 break;
                         }
                     }
@@ -163,4 +166,30 @@ public class MainViewModel implements Subscription {
     public boolean isUnsubscribed() {
         return subscriptions.isUnsubscribed();
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.stateContext, 0);
+    }
+
+    protected MainViewModel(Parcel in) {
+        this.stateContext = in.readParcelable(StateContext.class.getClassLoader());
+        init();
+    }
+
+    public static final Parcelable.Creator<MainViewModel> CREATOR = new Parcelable.Creator<MainViewModel>() {
+        public MainViewModel createFromParcel(Parcel source) {
+            return new MainViewModel(source);
+        }
+
+        public MainViewModel[] newArray(int size) {
+            return new MainViewModel[size];
+        }
+    };
 }

@@ -1,19 +1,19 @@
 package miwax.java_conf.gr.jp.frugalitycalc.util.messenger;
 
 public class ShowAlertDialogMessage implements Message {
-    private final String title;
-    private final String text;
+    private final int titleId;
+    private final int textId;
 
-    public ShowAlertDialogMessage(String title, String text) {
-        this.title = title;
-        this.text = text;
+    public ShowAlertDialogMessage(int titleId, int textId) {
+        this.titleId = titleId;
+        this.textId = textId;
     }
 
-    public String getTitle() {
-        return title;
+    public int getTitleId() {
+        return titleId;
     }
 
-    public String getText() {
-        return text;
+    public int getTextId() {
+        return textId;
     }
 }

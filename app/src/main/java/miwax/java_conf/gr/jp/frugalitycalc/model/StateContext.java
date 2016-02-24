@@ -11,19 +11,15 @@ import rx.subjects.PublishSubject;
 
 public class StateContext implements Parcelable {
 
-    private State state;
-    private BigDecimal A;
-    private BigDecimal B;
+    private State state = InputAState.INSTANCE;
+    private BigDecimal A = new BigDecimal(CalcNumber.ZERO.getString());
+    private BigDecimal B = new BigDecimal(CalcNumber.ZERO.getString());
     private Operation operation;
     private Editor editor = new Editor();
     private final BehaviorSubject<BigDecimal> memory = BehaviorSubject.create(new BigDecimal(CalcNumber.ZERO.getString()));
     private final PublishSubject<CalcError> error = PublishSubject.create();
 
     public StateContext() {
-        clearA();
-        clearB();
-        clearMemory();
-        setState(InputAState.INSTANCE);
     }
 
     public State getState() {
@@ -154,6 +150,7 @@ public class StateContext implements Parcelable {
         dest.writeString(A.toString());
         dest.writeString(B.toString());
         dest.writeSerializable(operation);
+        dest.writeParcelable(editor, flags);
         dest.writeString(memory.getValue().toString());
     }
 
@@ -174,7 +171,8 @@ public class StateContext implements Parcelable {
         this.state = (State)parcel.readSerializable();
         this.A = new BigDecimal(parcel.readString());
         this.B = new BigDecimal(parcel.readString());
-        this.operation =  (Operation)parcel.readSerializable();
+        this.operation = (Operation)parcel.readSerializable();
+        this.editor = parcel.readParcelable(Editor.class.getClassLoader());
         this.memory.onNext(new BigDecimal(parcel.readString()));
     }
 }

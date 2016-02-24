@@ -1,9 +1,12 @@
 package miwax.java_conf.gr.jp.frugalitycalc.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
-public class Editor {
+public class Editor implements Parcelable {
     private final BehaviorSubject<String> result = BehaviorSubject.create(CalcNumber.ZERO.getString());
 
     public Editor() {
@@ -67,4 +70,29 @@ public class Editor {
 
         setString(num.getString());
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(result.getValue());
+    }
+
+    protected Editor(Parcel in) {
+        result.onNext(in.readString());
+    }
+
+    public static final Parcelable.Creator<Editor> CREATOR = new Parcelable.Creator<Editor>() {
+        public Editor createFromParcel(Parcel source) {
+            return new Editor(source);
+        }
+
+        public Editor[] newArray(int size) {
+            return new Editor[size];
+        }
+    };
 }
