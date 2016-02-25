@@ -34,6 +34,7 @@ public enum InputBState implements State {
             return;
         }
         context.clearB();
+        context.setOperation(operator);
         context.setState(OperatorState.INSTANCE);
     }
 
