@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
 
-public class StateContext implements Parcelable {
+public class CalcModel implements Parcelable {
 
     private State state = InputAState.INSTANCE;
     private BigDecimal A = new BigDecimal(CalcNumber.ZERO.getString());
@@ -19,7 +19,7 @@ public class StateContext implements Parcelable {
     private final BehaviorSubject<BigDecimal> memory = BehaviorSubject.create(new BigDecimal(CalcNumber.ZERO.getString()));
     private final PublishSubject<CalcError> error = PublishSubject.create();
 
-    public StateContext() {
+    public CalcModel() {
     }
 
     public State getState() {
@@ -158,20 +158,20 @@ public class StateContext implements Parcelable {
         dest.writeString(memory.getValue().toString());
     }
 
-    public static final Parcelable.Creator<StateContext> CREATOR
-            = new Parcelable.Creator<StateContext>() {
+    public static final Parcelable.Creator<CalcModel> CREATOR
+            = new Parcelable.Creator<CalcModel>() {
         @Override
-        public StateContext createFromParcel(Parcel parcel) {
-            return new StateContext(parcel);
+        public CalcModel createFromParcel(Parcel parcel) {
+            return new CalcModel(parcel);
         }
 
         @Override
-        public StateContext[] newArray(int i) {
-            return new StateContext[i];
+        public CalcModel[] newArray(int i) {
+            return new CalcModel[i];
         }
     };
 
-    private StateContext(Parcel parcel) {
+    private CalcModel(Parcel parcel) {
         this.state = (State)parcel.readSerializable();
         this.A = new BigDecimal(parcel.readString());
         this.B = new BigDecimal(parcel.readString());

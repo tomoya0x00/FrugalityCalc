@@ -11,7 +11,7 @@ import miwax.java_conf.gr.jp.frugalitycalc.R;
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcError;
 import miwax.java_conf.gr.jp.frugalitycalc.model.CalcNumber;
 import miwax.java_conf.gr.jp.frugalitycalc.model.Operation;
-import miwax.java_conf.gr.jp.frugalitycalc.model.StateContext;
+import miwax.java_conf.gr.jp.frugalitycalc.model.CalcModel;
 import miwax.java_conf.gr.jp.frugalitycalc.util.messenger.Messenger;
 import miwax.java_conf.gr.jp.frugalitycalc.util.messenger.ShowAlertDialogMessage;
 import rx.Subscription;
@@ -26,7 +26,7 @@ public class MainViewModel implements Subscription, Parcelable {
     public ObservableField<BigDecimal> memory;
     public ObservableField<Operation> operation;
 
-    private StateContext stateContext = new StateContext();
+    private CalcModel calcModel = new CalcModel();
     private Messenger messenger = new Messenger();
 
     private final CompositeSubscription subscriptions = new CompositeSubscription();
@@ -36,12 +36,12 @@ public class MainViewModel implements Subscription, Parcelable {
     }
 
     private void init() {
-        result = ObservableUtil.toObservableField(stateContext.getObservableResult(), subscriptions);
-        memory = ObservableUtil.toObservableField(stateContext.getObservableMemory(), subscriptions);
-        operation = ObservableUtil.toObservableField(stateContext.getObservableOperation(), subscriptions);
+        result = ObservableUtil.toObservableField(calcModel.getObservableResult(), subscriptions);
+        memory = ObservableUtil.toObservableField(calcModel.getObservableMemory(), subscriptions);
+        operation = ObservableUtil.toObservableField(calcModel.getObservableOperation(), subscriptions);
 
         subscriptions.add(
-                stateContext.getObservableError().subscribe(new Action1<CalcError>() {
+                calcModel.getObservableError().subscribe(new Action1<CalcError>() {
                     @Override
                     public void call(CalcError calcError) {
                         // 該当するエラーがあればダイアログ表示
@@ -106,7 +106,7 @@ public class MainViewModel implements Subscription, Parcelable {
             default:
                 break;
         }
-        stateContext.onInputNumber(number);
+        calcModel.onInputNumber(number);
     }
 
     public void onClickOperator(View view) {
@@ -128,35 +128,35 @@ public class MainViewModel implements Subscription, Parcelable {
             default:
                 break;
         }
-        stateContext.onInputOperator(operation);
+        calcModel.onInputOperator(operation);
     }
 
     public void onClickClearEnd(View view) {
-        stateContext.onInputClearEnd();
+        calcModel.onInputClearEnd();
     }
 
     public void onClickAllClear(View view) {
-        stateContext.onInputAllClear();
+        calcModel.onInputAllClear();
     }
 
     public void onClickEqual(View view) {
-        stateContext.onInputEqual();
+        calcModel.onInputEqual();
     }
 
     public void onClickMemoryClear(View view) {
-        stateContext.onInputMemoryClear();
+        calcModel.onInputMemoryClear();
     }
 
     public void onClickMemoryRead(View view) {
-        stateContext.onInputMemoryRead();
+        calcModel.onInputMemoryRead();
     }
 
     public void onClickMemoryPlus(View view) {
-        stateContext.onInputMemoryPlus();
+        calcModel.onInputMemoryPlus();
     }
 
     public void onClickMemoryMinus(View view) {
-        stateContext.onInputMemoryMinus();
+        calcModel.onInputMemoryMinus();
     }
 
     @Override
@@ -177,11 +177,11 @@ public class MainViewModel implements Subscription, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.stateContext, 0);
+        dest.writeParcelable(this.calcModel, 0);
     }
 
     protected MainViewModel(Parcel in) {
-        this.stateContext = in.readParcelable(StateContext.class.getClassLoader());
+        this.calcModel = in.readParcelable(CalcModel.class.getClassLoader());
         init();
     }
 

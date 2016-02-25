@@ -3,13 +3,13 @@ package miwax.java_conf.gr.jp.frugalitycalc.model;
 import java.io.Serializable;
 
 public interface State extends Serializable {
-    void onInputNumber(StateContext context, CalcNumber input);
-    void onInputOperator(StateContext context, Operation operator);
-    void onInputEqual(StateContext context);
-    void onInputClearEnd(StateContext context);
-    void onInputAllClear(StateContext context);
-    void onInputMemoryRead(StateContext context);
-    void onInputMemoryClear(StateContext context);
-    void onInputMemoryPlus(StateContext context);
-    void onInputMemoryMinus(StateContext context);
+    void onInputNumber(CalcModel context, CalcNumber input);
+    void onInputOperator(CalcModel context, Operation operator);
+    void onInputEqual(CalcModel context);
+    void onInputClearEnd(CalcModel context);
+    void onInputAllClear(CalcModel context);
+    void onInputMemoryRead(CalcModel context);
+    void onInputMemoryClear(CalcModel context);
+    void onInputMemoryPlus(CalcModel context);
+    void onInputMemoryMinus(CalcModel context);
 }

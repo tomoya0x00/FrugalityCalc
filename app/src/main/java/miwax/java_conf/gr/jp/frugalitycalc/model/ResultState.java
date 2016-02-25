@@ -9,7 +9,7 @@ public enum ResultState implements State {
     INSTANCE;
 
     @Override
-    public void onInputNumber(StateContext context, CalcNumber input) {
+    public void onInputNumber(CalcModel context, CalcNumber input) {
         context.clearA();
         context.clearB();
         context.clearOperation();
@@ -18,7 +18,7 @@ public enum ResultState implements State {
     }
 
     @Override
-    public void onInputOperator(StateContext context, Operation operator) {
+    public void onInputOperator(CalcModel context, Operation operator) {
         try {
             BigDecimal a = new BigDecimal(context.getEditor().getString());
             context.setA(a);
@@ -33,12 +33,12 @@ public enum ResultState implements State {
     }
 
     @Override
-    public void onInputEqual(StateContext context) {
+    public void onInputEqual(CalcModel context) {
 
     }
 
     @Override
-    public void onInputClearEnd(StateContext context) {
+    public void onInputClearEnd(CalcModel context) {
         context.clearA();
         context.clearB();
         context.clearOperation();
@@ -47,7 +47,7 @@ public enum ResultState implements State {
     }
 
     @Override
-    public void onInputAllClear(StateContext context) {
+    public void onInputAllClear(CalcModel context) {
         context.clearA();
         context.clearB();
         context.clearOperation();
@@ -56,7 +56,7 @@ public enum ResultState implements State {
     }
 
     @Override
-    public void onInputMemoryRead(StateContext context) {
+    public void onInputMemoryRead(CalcModel context) {
         BigDecimal m = context.getMemory();
         context.getEditor().setString(m.toString());
         context.clearA();
@@ -66,12 +66,12 @@ public enum ResultState implements State {
     }
 
     @Override
-    public void onInputMemoryClear(StateContext context) {
+    public void onInputMemoryClear(CalcModel context) {
         context.clearMemory();
     }
 
     @Override
-    public void onInputMemoryPlus(StateContext context) {
+    public void onInputMemoryPlus(CalcModel context) {
         try {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().add(decimal));
@@ -82,7 +82,7 @@ public enum ResultState implements State {
     }
 
     @Override
-    public void onInputMemoryMinus(StateContext context) {
+    public void onInputMemoryMinus(CalcModel context) {
         try {
             BigDecimal decimal = new BigDecimal(context.getEditor().getString());
             context.setMemory(context.getMemory().subtract(decimal));
