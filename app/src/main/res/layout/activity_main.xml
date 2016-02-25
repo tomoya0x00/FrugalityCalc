@@ -12,14 +12,12 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#424242"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FAFAFA"
-            android:padding="4dp">
+            android:layout_margin="4dp">
 
             <TextView
                 android:id="@+id/memory_header_text"
@@ -28,7 +26,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:text="M:"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/memory_text"
@@ -36,20 +34,21 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/memory_header_text"
                 android:layout_alignTop="@id/memory_header_text"
-                android:layout_gravity="left"
-                android:background="#FAFAFA"
+                android:gravity="left"
                 android:singleLine="true"
                 android:text="@{viewModel.memory.toString}"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/operation_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_below="@id/memory_header_text"
                 android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:singleLine="true"
                 android:text="@{viewModel.operation.getString}"
-                android:textSize="16sp"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
 
@@ -57,8 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:background="#FAFAFA"
-            android:padding="4dp">
+            android:layout_margin="4dp">
 
             <TextView
                 android:id="@+id/result_text"
@@ -138,6 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:background="#424242"
             android:orientation="horizontal">
 
             <Button
@@ -181,6 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:background="#424242"
             android:orientation="horizontal">
 
             <Button
@@ -224,6 +224,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:background="#424242"
             android:orientation="horizontal">
 
             <Button
@@ -267,6 +268,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:background="#424242"
             android:orientation="horizontal">
 
             <Button
