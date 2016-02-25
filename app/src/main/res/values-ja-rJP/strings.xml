@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">シンプル電卓</string>
+    <string name="app_name">シンプルなメモリー電卓</string>
     <string name="error_title">エラー</string>
     <string name="calcerror_message">計算エラーが発生しました。\nオールクリアをおこないました。</string>
     <string name="inputerror_message">入力された数値が不正です。\nオールクリアをおこないました。</string>
